@@ -223,6 +223,11 @@ QMenu::item:selected {
             return self.disparar_erro("Arquivo não encontrado", e)
         except ArquivoNaoSuportado as e:
             return self.disparar_erro("Arquivo não é suportado", e)
+        except PermissionError as e:
+            return self.disparar_erro(
+                "Há algo que não permite ler/escrever arquivos, rode o aplicativo como administrador e tente novamente",
+                e,
+            )
         except Exception as e:
             return self.disparar_erro("Houve um erro inesperado", e)
         self.ui.list_path.setText(f"Encontrado: {arquivo}")
@@ -240,7 +245,7 @@ QMenu::item:selected {
                 "Um arquivo foi apagado sem querer e não foi encontrado", e
             )
         except ErroDeValidacaoConvite as e:
-            print("Houve um erro", e.mensagem, e.detalhes)
+            print("Houve um erro ao validar o convite", e.mensagem, e.detalhes)
             return self.disparar_erro(e.mensagem, e.detalhes)
 
         self.ui.invite_progress_bar.setValue(0)

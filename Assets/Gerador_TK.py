@@ -126,6 +126,11 @@ class GeradorConvite(QObject):
                 "Uma Palavra-chave não existe na planília",
                 "Mensagem do Jinja2:\n %s" % (e.message),
             )
+        except PermissionError as e:
+            raise ErroDeValidacaoConvite(
+                "Erro de permissão de leitura/escrita. Rode o aplicativo como administrador",
+                e,
+            )
         except Exception as e:
             raise ErroDeValidacaoConvite(
                 "Há um erro inesperado em algum dos arquivos", e

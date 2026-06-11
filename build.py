@@ -1,4 +1,3 @@
-import os
 import shutil
 import platform
 import subprocess
@@ -25,10 +24,12 @@ APP_NAME = "GeradorConvites"
 # UTILS
 # =========================
 
+
 def remove_if_exists(path: Path):
     if path.exists():
         print(f"[INFO] Removendo: {path}")
         shutil.rmtree(path)
+
 
 def clean_pyinstaller():
     remove_if_exists(DIST_DIR)
@@ -40,6 +41,7 @@ def clean_pyinstaller():
         print(f"[INFO] Removendo: {spec_file}")
         spec_file.unlink()
 
+
 def prepare_output_dir(target_dir: Path):
     if target_dir.exists():
         print(f"[INFO] Sobrescrevendo diretório existente: {target_dir}")
@@ -47,22 +49,18 @@ def prepare_output_dir(target_dir: Path):
 
     target_dir.mkdir(parents=True, exist_ok=True)
 
+
 # =========================
 # BUILD
 # =========================
+
 
 def build(target_os: str):
     clean_pyinstaller()
 
     print(f"[INFO] Buildando para: {target_os}")
 
-    cmd = [
-        "pyinstaller",
-        "--noconfirm",
-        "--windowed",
-        "--name", APP_NAME,
-        ENTRY_FILE
-    ]
+    cmd = ["pyinstaller", "--noconfirm", "--windowed", "--name", APP_NAME, ENTRY_FILE]
 
     subprocess.run(cmd, check=True)
 
@@ -79,6 +77,7 @@ def build(target_os: str):
     shutil.copytree(source, target / APP_NAME)
 
     clean_pyinstaller()
+
 
 # =========================
 # MAIN
