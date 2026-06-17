@@ -232,6 +232,7 @@ QMenu::item:selected {
             return self.disparar_erro("Houve um erro inesperado", e)
         self.ui.list_path.setText(f"Encontrado: {arquivo}")
         keys = self.backend.get_keys()
+        self.ui.key_list.clear()
         self.ui.key_list.addItems(keys)
 
     def start_process(self):
